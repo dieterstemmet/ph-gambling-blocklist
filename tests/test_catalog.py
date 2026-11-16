@@ -61,7 +61,7 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual((self.root / "blocklists/adguard.txt").read_bytes(), original)
 
     def test_review_and_evidence_are_required(self):
-        for field, bad in [("reviewed_on", "tomorrow"), ("evidence_url", "http://example.org"), ("evidence_url", "https://example.org/\n||good.example^"), ("evidence_url", "https://example.org/|x"), ("evidence_url", "https://user:password@example.org"), ("evidence_url", 42)]:
+        for field, bad in [("reviewed_on", "tomorrow"), ("reviewed_on", "20261117"), ("reviewed_on", 42), ("evidence_url", "http://example.org"), ("evidence_url", "https:///missing-host"), ("evidence_url", "https://example.org/\n||good.example^"), ("evidence_url", "https://example.org/|x"), ("evidence_url", "https://user:password@example.org"), ("evidence_url", "https://user@example.org"), ("evidence_url", "https://:password@example.org"), ("evidence_url", 42)]:
             with self.subTest(field=field, bad=bad):
                 row = self.record("casino.example")
                 row[field] = bad
@@ -105,6 +105,18 @@ class CatalogTests(unittest.TestCase):
             self.save("domains", [])
             self.assertEqual(main(args), 1)
             self.assertIn("must not be empty", errors.getvalue())
+
+    def test_maximum_dns_hostname_length_is_accepted(self):
+        host = ".".join(["a" * 63, "b" * 63, "c" * 63, "d" * 61])
+        self.assertEqual(len(host), 253)
+        self.assertEqual(canonical_host(host), host)
+        with self.assertRaises(ValueError):
+            canonical_host(host + "d")
+
+    def test_cli_requires_a_command(self):
+        with redirect_stderr(StringIO()), self.assertRaises(SystemExit) as error:
+            main([])
+        self.assertEqual(error.exception.code, 2)
 
 
 if __name__ == "__main__":

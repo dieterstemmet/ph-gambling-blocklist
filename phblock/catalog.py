@@ -96,7 +96,7 @@ def render(records):
 
 
 def write_text(path, content):
-    path.parent.mkdir(parents=True, exist_ok=True)
+    path.parent.mkdir(exist_ok=True)
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=path.parent, delete=False) as temporary:
         temporary.write(content)
     Path(temporary.name).replace(path)

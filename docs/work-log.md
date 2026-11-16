@@ -11,3 +11,5 @@
 - Imported 432 explicit hostnames from the 15-page register, retaining each hostname's source page. Generated 395 AdGuard rules after removing child rules covered by reviewed parents.
 - Installed the hash-locked PDF reader in a task-specific scratch environment. A live refresh reproduced all 432 hostnames with no additions or missing records and left the published files unchanged.
 - Added AdGuard Home / Private AdGuard DNS setup instructions, a maintenance guide, issue forms and local push checks. Refresh scheduling is documented, not installed.
+- Ran the built-in code review. Its first run could not read the diff because the CLI blocked shell commands; supplied the code/config/docs diff through stdin, and the review found no actionable correctness defects. Execution verification remained local to this session.
+- Calibrated mutation testing with a known surviving hostname-length boundary and three known killed mutations. The full run then exposed five test gaps. Added maximum-length, command-required and credential-only URL cases; removed an unnecessary recursive-directory option.
