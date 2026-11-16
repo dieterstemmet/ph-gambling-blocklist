@@ -1,0 +1,10 @@
+{
+  "url": "https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf",
+  "published_on": "2026-10-29",
+  "sha256": "590296827b7c748bdd94414fa95bc253d43903f3c137a616f6a90f6bb2fc59c6",
+  "pages": 15,
+  "extracted_hosts": 432,
+  "retrieved_at": "2026-11-16T16:17:57.858690+00:00",
+  "extractor": "pypdf 7.1.0",
+  "review_note": "Domain tokens checked against the gaming-domain columns on all 15 source pages. Hosts are preserved verbatim apart from case; parent domains are not inferred. This is historical gambling evidence, not a live licence or availability check."
+}

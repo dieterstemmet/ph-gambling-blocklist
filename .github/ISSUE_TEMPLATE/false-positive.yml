@@ -1,0 +1,26 @@
+name: Report a false positive
+description: Report a hostname that should not be blocked.
+title: "False positive: "
+body:
+  - type: markdown
+    attributes:
+      value: "Do not post query logs, browsing history, credentials or personal details. A hostname and a description are enough to start a review."
+  - type: input
+    id: domain
+    attributes:
+      label: Blocked hostname
+      placeholder: service.example
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What the hostname is used for
+      description: Explain what breaks and why this hostname should be excluded. Add a public evidence link if available.
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Matching rule
+      description: If AdGuard shows the matching rule, paste only that rule. Leave out the rest of the log.
