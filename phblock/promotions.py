@@ -7,12 +7,13 @@ import json
 import re
 from urllib.parse import urlsplit
 
-from .catalog import canonical_host, load_catalog, overlaps, rule_hosts, write_text
+from .catalog import HOST, canonical_host, load_catalog, overlaps, rule_hosts, write_text
 from .discovery import extract_hosts, fetch_public
 
 
 SECTIONS = {"tgme_channel_info_description", "tgme_widget_message_text", "tgme_widget_message_inline_keyboard"}
 VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+VISIBLE_URL = re.compile(r"(?<![A-Za-z0-9@_.-])(?:https?://[^\s<>]+|" + HOST.pattern + r"(?::[0-9]+)?[/?#][^\s<>]*)", re.IGNORECASE)
 
 
 class PublicChannel(HTMLParser):
@@ -21,7 +22,6 @@ class PublicChannel(HTMLParser):
         self.url = url
         self.post_url = url
         self.section = None
-        self.depth = 0
         self.sections = []
 
     def handle_starttag(self, tag, attrs):
@@ -86,10 +86,10 @@ def parse_channel(html, url):
 def visible_hosts(text):
     def replace_url(match):
         url = match.group()
-        host = link_host(url if url.startswith("http") else "https://" + url)
+        host = link_host(url if url.lower().startswith(("http://", "https://")) else "https://" + url)
         return " " + host + " " if host is not None else " "
 
-    cleaned = re.sub(r"(?:https?://|www\.)[^\s<>]+", replace_url, text)
+    cleaned = VISIBLE_URL.sub(replace_url, text)
     return extract_hosts(cleaned)
 
 

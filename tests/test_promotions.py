@@ -54,12 +54,16 @@ class PromotionTests(unittest.TestCase):
                 parse_channel(html, URL)
 
     def test_invalid_or_non_web_button_links_are_not_candidates(self):
-        html = '<div class="tgme_channel_info_description"><a href="mailto:x@secret.example">Email</a><a href="javascript:alert(1)">Button</a><a href="https://name:secret@private.example">Bad</a><a href="https://[broken">Bad URL</a><a href="https://127.0.0.1">IP</a></div>'
+        html = '<div class="tgme_channel_info_description"><a href="mailto:x@secret.example">Email</a><a href="javascript:alert(1)">Button</a><a href="ftp://unsupported.example">FTP</a><a href="https://name:secret@private.example">Bad</a><a href="https://name@private.example">User only</a><a href="https://:secret@private.example">Password only</a><a href="https://[broken">Bad URL</a><a href="https://127.0.0.1">IP</a></div>'
         self.assertEqual(parse_channel(html, URL), [])
 
     def test_visible_urls_do_not_turn_paths_or_referral_tokens_into_hosts(self):
-        html = '<div class="tgme_widget_message_text">https://play.example/path.private?ref=referral.private#fragment.private www.mirror.example/private.path?token=token.private</div>'
-        self.assertEqual(set(parse_channel(html, URL)), {("play.example", URL), ("www.mirror.example", URL)})
+        html = '<div class="tgme_widget_message_text">HTTPS://play.example/path.private?ref=referral.private#fragment.private www.mirror.example/private.path?token=token.private bare.example/signup?ref=private.referral#private.fragment query.example?ref=private.query</div>'
+        self.assertEqual(set(parse_channel(html, URL)), {("play.example", URL), ("www.mirror.example", URL), ("bare.example", URL), ("query.example", URL)})
+
+    def test_entities_line_breaks_and_self_closing_media_preserve_visible_hosts(self):
+        html = '<div class="tgme_widget_message_text">one.example<br>two.example <img src="image.example"/> after.example entity&#46;example</div>'
+        self.assertEqual(set(parse_channel(html, URL)), {(host, URL) for host in ["one.example", "two.example", "after.example", "entity.example"]})
 
     def test_candidate_coverage_uses_label_boundaries_and_retains_all_evidence(self):
         observations = {"api.old.example": {URL}, "notold.example": {URL}, "mirror.example": {URL, "https://t.me/example_channel/123"}, "t.me": {URL}}
