@@ -1,0 +1,28 @@
+name: Report a gambling domain
+description: Submit a missed Philippine gambling hostname with public evidence.
+title: "Add gambling domain: "
+body:
+  - type: markdown
+    attributes:
+      value: "Submit hostnames and public evidence only. Do not post query logs, browsing history, credentials, personal details or referral tokens. No signup or deposit is needed."
+  - type: input
+    id: domain
+    attributes:
+      label: Hostname
+      placeholder: casino.example
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Public evidence URL
+      description: A regulator entry, platform announcement or documented report identifying this hostname.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Gambling use and Philippine connection
+      description: Describe what the source establishes and when you checked it. Mention a parent platform if this is a mirror.
+    validations:
+      required: true

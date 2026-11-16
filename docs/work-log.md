@@ -7,3 +7,7 @@
 - Read AdGuard's DNS filtering documentation and PAGCOR's domain register to choose a compatible output format and an evidence source.
 - Downloaded the current PAGCOR PDF. Its heading says October 29, 2026; search excerpts at the same URL still refer to January. The tracker will record the downloaded document's date.
 - Scoped the release to a subscription, evidence records, reviewable discovery and contribution forms. Excluded a hosted app and external AI because neither is needed to maintain a public domain list.
+- Wrote failing tests for subscription scope, malformed records, source comparisons and publication safety, then implemented the Python builder and discovery command.
+- Imported 432 explicit hostnames from the 15-page register, retaining each hostname's source page. Generated 395 AdGuard rules after removing child rules covered by reviewed parents.
+- Installed the hash-locked PDF reader in a task-specific scratch environment. A live refresh reproduced all 432 hostnames with no additions or missing records and left the published files unchanged.
+- Added AdGuard Home / Private AdGuard DNS setup instructions, a maintenance guide, issue forms and local push checks. Refresh scheduling is documented, not installed.
