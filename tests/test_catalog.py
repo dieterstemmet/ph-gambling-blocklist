@@ -70,11 +70,13 @@ class CatalogTests(unittest.TestCase):
                     build(self.root)
 
     def test_exclusion_conflicts_in_both_directions(self):
-        for host in ["payments.example", "api.payments.example", "example"]:
+        for host in ["payments.example", "api.payments.example"]:
             with self.subTest(host=host):
                 self.save("domains", [self.record(host)])
                 with self.assertRaises(ValueError):
                     build(self.root)
+        self.save("domains", [self.record("notpayments.example")])
+        self.assertEqual(build(self.root), [])
         self.save("exclusions", [{"domain": "support.casino.example", "reason": "Support service"}])
         self.save("domains", self.rows)
         with self.assertRaisesRegex(ValueError, "exclusion"):

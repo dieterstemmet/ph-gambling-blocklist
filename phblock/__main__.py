@@ -26,7 +26,7 @@ def main(argv=None):
             print("Reviewed blocklists verified." if args.check else "Reviewed blocklists built.")
         else:
             report = refresh(args.root, pdf=args.pdf)
-            print(f"PAGCOR {report['source']['published_on']}: {len(report['additions'])} additions, {len(report['missing'])} missing, {len(report['excluded'])} excluded. Review reports/pagcor.json; published lists unchanged.")
+            print(f"PAGCOR {report['source']['published_on']}: {len(report['additions'])} additions, {len(report['missing'])} missing, {len(report['excluded'])} excluded, {len(report['source']['extraction_issues'])} extraction issues. Review reports/pagcor.json; published lists unchanged.")
     except (ValueError, OSError, ImportError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

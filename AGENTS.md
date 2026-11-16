@@ -10,3 +10,4 @@ This repository publishes an opt-in Philippine gambling DNS blocklist. Follow Di
 - No subscriber data, query logs, external AI, affiliate links or paid APIs.
 - No hosted CI. `ops/gate` runs tests and verifies generated output locally on every push. Document refresh scheduling; do not install a scheduler on the maintainer's machine.
 - Use an isolated worktree, small commits, and a pull request. Keep the action log in `docs/work-log.md`.
+- When testing a local filter file with AdGuard Home on Windows, `safe_fs_patterns` must use native backslashes; a forward-slash glob does not match its normalized paths. Confirm `rules_count` before DNS assertions. Choose a DNS test port available for both TCP and UDP.

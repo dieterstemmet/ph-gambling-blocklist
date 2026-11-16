@@ -11,11 +11,25 @@ from .catalog import HOMEPAGE, canonical_host, load_catalog, overlaps, write_tex
 
 
 SOURCE_URL = "https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf"
-DOMAIN_TOKEN = re.compile(r"(?<![A-Za-z0-9@_.-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}(?![A-Za-z0-9_.-])")
+DOMAIN_TOKEN = re.compile(r"(?<![A-Za-z0-9@_.-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}(?![A-Za-z0-9_-]|\.[A-Za-z0-9_-])")
+WRAPPED_TOKEN = re.compile(r"[A-Za-z0-9.-]+[.-][ \t]*\r?\n[ \t]*[A-Za-z0-9.-]+\.[A-Za-z]{2,63}")
 
 
-def extract_hosts(text):
-    return {canonical_host(match.group()) for match in DOMAIN_TOKEN.finditer(text)}
+def skip_wrapped(match, issues):
+    issues.append({"token": match.group(), "reason": "line-wrapped token; inspect the PDF"})
+    return " "
+
+
+def extract_hosts(text, issues=None):
+    issues = [] if issues is None else issues
+    cleaned = WRAPPED_TOKEN.sub(lambda match: skip_wrapped(match, issues), text)
+    hosts = set()
+    for match in DOMAIN_TOKEN.finditer(cleaned):
+        try:
+            hosts.add(canonical_host(match.group()))
+        except ValueError:
+            issues.append({"token": match.group(), "reason": "invalid hostname"})
+    return hosts
 
 
 def parse_document_date(text):
@@ -25,22 +39,33 @@ def parse_document_date(text):
     return datetime.strptime(match.group(1), "%B %d, %Y").date().isoformat()
 
 
-def read_register(payload):
+def pdf_texts(payload):
     from pypdf import PdfReader
+    from pypdf.errors import PyPdfError
 
-    reader = PdfReader(BytesIO(payload))
-    texts = [page.extract_text() or "" for page in reader.pages]
+    try:
+        reader = PdfReader(BytesIO(payload))
+        return [page.extract_text() or "" for page in reader.pages]
+    except PyPdfError as error:
+        raise ValueError("Cannot read PAGCOR document as PDF; check the download") from error
+
+
+def read_register(payload):
+    texts = pdf_texts(payload)
     first = texts[0] if texts else ""
     if "List of PAGCOR-Accredited Gaming System Administrators" not in first:
         raise ValueError("document is not the expected PAGCOR domain register")
     published = parse_document_date(first)
     domains = {}
+    extraction_issues = []
     for number, text in enumerate(texts, start=1):
-        for host in extract_hosts(text):
+        issues = []
+        for host in extract_hosts(text, issues):
             domains.setdefault(host, []).append(number)
+        extraction_issues.extend({"page": number, **issue} for issue in issues)
     if not domains:
         raise ValueError("no domains extracted; review the source format")
-    metadata = {"url": SOURCE_URL, "published_on": published, "sha256": sha256(payload).hexdigest(), "pages": len(texts), "extracted_hosts": len(domains)}
+    metadata = {"url": SOURCE_URL, "published_on": published, "sha256": sha256(payload).hexdigest(), "pages": len(texts), "extracted_hosts": len(domains), "extraction_issues": extraction_issues}
     return metadata, dict(sorted(domains.items()))
 
 

@@ -29,7 +29,7 @@ Install the hash-locked PDF reader, then run:
 python -m phblock refresh
 ```
 
-`reports/pagcor.json` is an ignored local report. It contains the document date, retrieval time in UTC, SHA-256, extracted and reviewed counts, additions with source page numbers, missing hostnames and excluded hostnames. Inspect those counts before reviewing candidates. The report is a proposal; it never changes the subscription or grants a review date.
+`reports/pagcor.json` is an ignored local report. It contains the document date, retrieval time in UTC, SHA-256, extracted and reviewed counts, additions with source page numbers, missing hostnames, excluded hostnames and extraction issues with page numbers. Inspect those counts and issues before reviewing candidates. Ambiguous line-wrapped tokens are flagged for inspection, not guessed or proposed as domains. The report never changes the subscription or grants a review date.
 
 For an official PDF downloaded separately:
 

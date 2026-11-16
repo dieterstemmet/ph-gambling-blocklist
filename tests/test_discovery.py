@@ -17,10 +17,29 @@ from phblock.__main__ import main
 HEADING = "List of PAGCOR-Accredited Gaming System Administrators and Registered Brands and Domain Names/URLs as of October 29, 2026:"
 
 
+class FakePdfError(Exception):
+    pass
+
+
 class DiscoveryTests(unittest.TestCase):
     def test_extraction_handles_urls_case_subdomains_and_email_boundaries(self):
         text = "Main domain: Casino.Example https://play.casino.example/start www.casino.example\ncontact@regulator.example host.example.evil 127.0.0.1"
         self.assertEqual(extract_hosts(text), {"casino.example", "play.casino.example", "www.casino.example", "host.example.evil"})
+
+    def test_punctuation_and_ambiguous_wrapping_are_not_silent_false_candidates(self):
+        self.assertEqual(extract_hosts("See bingoplus.ph."), {"bingoplus.ph"})
+        for fragment in ["juanzone.\ncom.ph", "www.ok-\nweb.okbet.com"]:
+            issues = []
+            self.assertEqual(extract_hosts(fragment + " valid.example", issues), {"valid.example"})
+            self.assertEqual(issues, [{"token": fragment, "reason": "line-wrapped token; inspect the PDF"}])
+        issues = []
+        self.assertEqual(extract_hosts("com.ph valid.example", issues), {"valid.example"})
+        self.assertEqual(issues, [{"token": "com.ph", "reason": "invalid hostname"}])
+
+    def test_exclusions_respect_dns_label_boundaries(self):
+        report = compare({"notregulator.example": [1]}, [], [{"domain": "regulator.example"}])
+        self.assertEqual(report["additions"], [{"domain": "notregulator.example", "pages": [1]}])
+        self.assertEqual(report["excluded"], [])
 
     def test_document_date_comes_from_the_register_heading(self):
         self.assertEqual(parse_document_date(HEADING), "2026-10-29")
@@ -42,18 +61,36 @@ class DiscoveryTests(unittest.TestCase):
     def test_pdf_reader_records_evidence_pages_and_source_digest(self):
         pages = [SimpleNamespace(extract_text=lambda: HEADING + " casino.example"), SimpleNamespace(extract_text=lambda: "casino.example new.example")]
         reader = Mock(return_value=SimpleNamespace(pages=pages))
-        with patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=reader)}):
+        with patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=reader), "pypdf.errors": SimpleNamespace(PyPdfError=FakePdfError)}):
             source, domains = read_register(b"public source PDF")
         self.assertEqual(domains, {"casino.example": [1, 2], "new.example": [2]})
-        self.assertEqual(source, {"url": SOURCE_URL, "published_on": "2026-10-29", "sha256": sha256(b"public source PDF").hexdigest(), "pages": 2, "extracted_hosts": 2})
+        self.assertEqual(source, {"url": SOURCE_URL, "published_on": "2026-10-29", "sha256": sha256(b"public source PDF").hexdigest(), "pages": 2, "extracted_hosts": 2, "extraction_issues": []})
         self.assertEqual(reader.call_args.args[0].getvalue(), b"public source PDF")
 
     def test_wrong_empty_and_unreadable_documents_fail(self):
         for texts in [[], ["Unrelated PDF"], [HEADING], [None]]:
             pages = [SimpleNamespace(extract_text=Mock(return_value=text)) for text in texts]
-            with self.subTest(texts=texts), patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=Mock(return_value=SimpleNamespace(pages=pages)))}):
+            with self.subTest(texts=texts), patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=Mock(return_value=SimpleNamespace(pages=pages))), "pypdf.errors": SimpleNamespace(PyPdfError=FakePdfError)}):
                 with self.assertRaises(ValueError):
                     read_register(b"document")
+
+    def test_pdf_errors_become_actionable_cli_errors(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch("phblock.discovery.load_catalog", return_value=([{"domain": "casino.example"}], [])), patch("phblock.discovery.fetch_register", return_value=b"not a PDF"), patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=Mock(side_effect=FakePdfError("invalid header"))), "pypdf.errors": SimpleNamespace(PyPdfError=FakePdfError)}):
+                from contextlib import redirect_stderr
+                with redirect_stderr(StringIO()) as error:
+                    self.assertEqual(main(["--root", str(root), "refresh"]), 1)
+                self.assertIn("Error: Cannot read PAGCOR document as PDF", error.getvalue())
+                self.assertNotIn("Traceback", error.getvalue())
+                self.assertFalse((root / "reports/pagcor.json").exists())
+
+    def test_source_report_attaches_page_numbers_to_extraction_issues(self):
+        pages = [SimpleNamespace(extract_text=lambda: HEADING + " valid.example com.ph")]
+        with patch.dict(sys.modules, {"pypdf": SimpleNamespace(PdfReader=Mock(return_value=SimpleNamespace(pages=pages))), "pypdf.errors": SimpleNamespace(PyPdfError=FakePdfError)}):
+            source, domains = read_register(b"source")
+        self.assertEqual(domains, {"valid.example": [1]})
+        self.assertEqual(source["extraction_issues"], [{"page": 1, "token": "com.ph", "reason": "invalid hostname"}])
 
     def test_network_request_identifies_project_and_fetches_official_source(self):
         response = Mock()
@@ -76,7 +113,7 @@ class DiscoveryTests(unittest.TestCase):
             (root / "data/exclusions.json").write_text("[]", encoding="utf-8")
             pdf = root / "input.pdf"
             pdf.write_bytes(b"PDF content")
-            with patch("phblock.discovery.read_register", return_value=({"published_on": "2026-10-29"}, {"new.example": [2]})) as reader:
+            with patch("phblock.discovery.read_register", return_value=({"published_on": "2026-10-29", "extraction_issues": []}, {"new.example": [2]})) as reader:
                 with redirect_stdout(StringIO()) as output:
                     self.assertEqual(main(["--root", str(root), "refresh", "--pdf", str(pdf)]), 0)
                 reader.assert_called_once_with(b"PDF content")
