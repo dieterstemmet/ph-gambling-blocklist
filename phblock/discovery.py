@@ -82,10 +82,14 @@ def compare(discovered, records, exclusions, source_url=None):
     }
 
 
-def fetch_register():
-    request = Request(SOURCE_URL, headers={"User-Agent": f"ph-gambling-blocklist/0.1 (+{HOMEPAGE})"})
+def fetch_public(url):
+    request = Request(url, headers={"User-Agent": f"ph-gambling-blocklist/0.1 (+{HOMEPAGE})"})
     with urlopen(request, timeout=60) as response:
         return response.read()
+
+
+def fetch_register():
+    return fetch_public(SOURCE_URL)
 
 
 def refresh(root, pdf=None):

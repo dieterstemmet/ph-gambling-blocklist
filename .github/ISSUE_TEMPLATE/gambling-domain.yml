@@ -26,3 +26,15 @@ body:
       description: Describe what the source establishes and when you checked it. Mention a parent platform if this is a mirror.
     validations:
       required: true
+  - type: dropdown
+    id: discovery_channel
+    attributes:
+      label: Where the promotion appeared
+      options:
+        - Facebook or Instagram ad/post
+        - YouTube or other public video
+        - Public Telegram channel
+        - Search result or affiliate website
+        - SMS or private message (hostname only)
+        - Regulator notice or public report
+        - Other public source

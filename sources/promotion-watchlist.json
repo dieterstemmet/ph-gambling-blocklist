@@ -1,0 +1,12 @@
+[
+  {
+    "id": "phwin-public-channel",
+    "url": "https://t.me/s/phwintgchannel",
+    "reason": "The public channel description advertises a Philippine casino and lists explicit alternative domains. Reviewed November 17, 2026."
+  },
+  {
+    "id": "phplay-public-channel",
+    "url": "https://t.me/s/PHPLAY_Offical",
+    "reason": "Public Philippine gambling promotions include landing-page buttons and an announcement migrating phplay.vip to d10d.vip. Reviewed November 17, 2026."
+  }
+]

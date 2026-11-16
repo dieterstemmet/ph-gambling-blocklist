@@ -37,3 +37,9 @@ This proves that AdGuard Home consumes the generated syntax and applies it at DN
 4. The tests did not distinguish excluded domains from sibling names sharing a suffix. Added builder and discovery regressions for `notpayments.example` and `notregulator.example`.
 
 Mutation testing was calibrated before trusting its score: one known untested length-boundary mutation survived, while three known damaging mutations failed. The missing boundary check was then added. Mutation scores describe the operators the tool selects; they are not proof against every possible defect.
+
+## Promotion discovery and Pages publication
+
+The follow-up checks on November 17, 2026 cover 30 passing offline tests, a successful live watch of two curated public Telegram previews, and ten manually reviewed casino destinations. The updated catalog contains 442 hostnames and 404 rules. Shared messaging, chat/file hosts and unclassified links are kept separate from approved destinations. Tests cover post provenance, visible/href URL token removal, exclusion label boundaries, private/inaccessible source rejection and partial failures.
+
+The GitHub Pages subscription was imported using AdGuard Home's real `/control/filtering/add_url` API, starting with no local filter list loaded. The published initial 395-rule asset imported with HTTP 200 and passed all 1,728 A/AAAA blocked-answer checks and three unblocked controls. The resolver used a local synthetic upstream for gambling/control queries and resolved only the subscription host externally. The private AdGuard DNS dashboard remains untested without a dedicated account. The original raw URL's rejection in the user's product was not reproduced; the product and error are still needed to diagnose that rejection.

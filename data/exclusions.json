@@ -2,5 +2,9 @@
   {
     "domain": "pagcor.ph",
     "reason": "Regulator, source evidence and responsible-gambling information; not a gambling platform."
+  },
+  {
+    "domain": "t.me",
+    "reason": "Shared messaging platform and observed public-promotion source; a channel URL does not establish gambling use of the entire host."
   }
 ]

@@ -19,3 +19,13 @@
 - Review runs so far: two built-in Codex runs (including one blocked attempt), one Claude cold review. The shipped updater makes no model calls.
 - Completed the final code gates on the committed branch: no duplicate candidates at 0.8, worst CRAP 9.0 and 61/61 selected mutations killed, with no uncovered sites or survivors. The worktree remained clean after mutation testing.
 - Recorded reproducible checks, AdGuard behavior, review resolutions and coverage limits in `docs/verification.md`; prepared the GitHub pull request for publication.
+
+## Promotion discovery and subscription hosting
+
+- Investigated where Philippine gambling platforms reach people: social ads and creator posts, paid search/video ads, public Telegram channels, affiliate comparison pages and SMS. Checked primary platform access documentation and public promotion examples.
+- Found explicit alternative-domain lists and a domain-migration announcement in two public Telegram previews. A separate CICC promotion report identifies 11 domains absent from the initial catalog; retained it as a review lead.
+- Added failing public-preview extraction, provenance, label-boundary, privacy and partial-failure tests, then implemented `python -m phblock watch` and a curated public watchlist. The command fetches only the configured public previews and leaves publication separate.
+- The raw subscription and the reference filter both returned `text/plain` and the same rule syntax. Enabled GitHub Pages on the isolated `gh-pages` artifact branch after the user could not add the raw URL. The source of the user's original rejection remains unconfirmed without the product/error.
+- Verified the live Pages endpoint and imported it through AdGuard Home's real add-URL API with no local list loaded: HTTP 200, 395 rules, all 1,728 A/AAAA checks passed and three controls remained unblocked. No gambling destination was contacted. Updated publication instructions to require syncing Pages with reviewed main-branch releases.
+- Reviewed ten explicit casino destinations from the public mirror lists, landing-page buttons and migration announcements, adding their source permalinks and snapshot hashes. The catalog now contains 442 hosts and 404 rules. Three unclassified chat/file/other links remain pending; the shared `t.me` host is an explicit exclusion.
+- Added a regression proving visible URL paths, referral queries and fragments cannot become candidate hostnames. The live watch now reports 13 candidates, ten already covered, one shared-host exclusion and zero source errors. All 30 offline tests pass; generated output is reproducible.
