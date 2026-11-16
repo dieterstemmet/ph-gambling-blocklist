@@ -24,11 +24,16 @@ The first import uses the document actually downloaded from PAGCOR, whose headin
 
 Refresh fetches only the configured official register. It does not visit gambling platforms, scan users' browsing history, follow casino redirects or enumerate guessed mirrors. Source failures return an error and leave published files unchanged. The refresh report retains the document date, source digest and additions/missing entries so a maintainer can review the result.
 
+`watch` complements the register with a curated public-promotion watchlist. It retains hostname observations and public source permalinks, checks reviewed-rule coverage and records source failures. It never follows destination links or publishes candidates. See `docs/discovery-sources.md` for the acquisition map, independent source examples and privacy boundaries.
+
+The subscription is served as a text asset by GitHub Pages. Its `gh-pages` publication branch holds only generated assets and the deployment marker; source/data files remain on `main`. Every filter release includes publication and a live byte-for-byte check.
+
 ## Privacy
 
 | Recipient | What is sent | What is never sent | What is stored here |
 | --- | --- | --- | --- |
 | PAGCOR | Request for its public domain register | Subscriber identity, DNS queries, browsing history, credentials | Public source metadata and reviewed hostnames |
+| Telegram public web preview | Request for a curated public channel preview | Subscriber identity, private messages, phone numbers, credentials | Hostnames, public post links, retrieval time and source hash |
 | GitHub | Repository files and public community submissions | AdGuard credentials, DNS query logs, personal browsing data | Source code, domain evidence, generated lists, public reports |
 
 DNS blocking applies to listed hosts and their subdomains. It cannot filter a gambling ad served from the same domain as unrelated content, discover every new platform, or stop a device using a different resolver. Presence here describes gambling-related evidence; it is not a statement that an operator is illegal or currently licensed.

@@ -1,0 +1,37 @@
+{
+  "reviewed_on": "2026-11-17",
+  "checked_at": "2026-11-16T17:02:48.786121+00:00",
+  "source_snapshots": [
+    {
+      "id": "phwin-public-channel",
+      "url": "https://t.me/s/phwintgchannel",
+      "sha256": "fdda65098f3f078dc64a7250bcadb15b0c823ea36232d138b31dd4f2e5e56a1a"
+    },
+    {
+      "id": "phplay-public-channel",
+      "url": "https://t.me/s/PHPLAY_Offical",
+      "sha256": "3d98c2ab4b14ac66891484cba2532ea0086dcbb1c4e30034fd04581512098d09"
+    }
+  ],
+  "accepted_hosts": [
+    "d10d.vip",
+    "phplay.bond",
+    "phplay.vip",
+    "phplay.xyz",
+    "phwin.club",
+    "phwin.net",
+    "phwin.vip",
+    "phwin11.com",
+    "phwin22.com",
+    "www.phplay.bond"
+  ],
+  "pending_hosts": [
+    "chatlink.wchatlink.com",
+    "file.zs111.xyz",
+    "www.phplay.me"
+  ],
+  "excluded_hosts": [
+    "t.me"
+  ],
+  "review_basis": "Public descriptions explicitly list alternative casino links; public promotion buttons identify gambling landing pages; public migration messages identify the old and replacement casino domains. General chat and file hosts, and an additional unclassified hostname, remain unapproved. Retrieval and review dates do not establish launch time, reachability or licence status."
+}

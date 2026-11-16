@@ -4,7 +4,7 @@
 ! License: MIT
 ! Expires: 1 days
 ! Last reviewed: 2026-11-17
-! Rules: 395
+! Rules: 404
 ||123bingo.ph^
 ||123go.com^
 ||123go.games^
@@ -86,6 +86,7 @@
 ||crazywin.ph^
 ||crazywingo.asia^
 ||crazywingo.ph^
+||d10d.vip^
 ||deskace.app^
 ||deskace.com^
 ||deskace.ph^
@@ -286,6 +287,14 @@
 ||peryaplay.ph^
 ||peryaplus.net^
 ||pesomaxfun.com^
+||phplay.bond^
+||phplay.vip^
+||phplay.xyz^
+||phwin.club^
+||phwin.net^
+||phwin.vip^
+||phwin11.com^
+||phwin22.com^
 ||pin77.com^
 ||pin77.net^
 ||pin77.ph^

@@ -1,6 +1,6 @@
 # Reviewed domains
 
-432 reviewed hostnames; 395 AdGuard rules after removing covered subdomains.
+442 reviewed hostnames; 404 AdGuard rules after removing covered subdomains.
 
 Generated from `data/domains.json`. Review dates describe evidence review, not live availability or licence status.
 
@@ -89,6 +89,7 @@ Generated from `data/domains.json`. Review dates describe evidence review, not l
 | `crazywin.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
 | `crazywingo.asia` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
 | `crazywingo.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
+| `d10d.vip` | [Source](https://t.me/PHPLAY_Offical/393) | 2026-11-17 |
 | `deskace.app` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=11) | 2026-11-17 |
 | `deskace.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=10) | 2026-11-17 |
 | `deskace.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=11) | 2026-11-17 |
@@ -301,6 +302,14 @@ Generated from `data/domains.json`. Review dates describe evidence review, not l
 | `pesomaxfun.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
 | `ph.747.live` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
 | `ph.747live.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=2) | 2026-11-17 |
+| `phplay.bond` | [Source](https://t.me/s/PHPLAY_Offical) | 2026-11-17 |
+| `phplay.vip` | [Source](https://t.me/PHPLAY_Offical/393) | 2026-11-17 |
+| `phplay.xyz` | [Source](https://t.me/PHPLAY_Offical/380) | 2026-11-17 |
+| `phwin.club` | [Source](https://t.me/s/phwintgchannel) | 2026-11-17 |
+| `phwin.net` | [Source](https://t.me/phwintgchannel/15) | 2026-11-17 |
+| `phwin.vip` | [Source](https://t.me/s/phwintgchannel) | 2026-11-17 |
+| `phwin11.com` | [Source](https://t.me/s/phwintgchannel) | 2026-11-17 |
+| `phwin22.com` | [Source](https://t.me/s/phwintgchannel) | 2026-11-17 |
 | `pin77.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=7) | 2026-11-17 |
 | `pin77.net` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=7) | 2026-11-17 |
 | `pin77.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=7) | 2026-11-17 |
@@ -430,6 +439,7 @@ Generated from `data/domains.json`. Review dates describe evidence review, not l
 | `www.okpisoluck.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=4) | 2026-11-17 |
 | `www.okpisoluck.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=4) | 2026-11-17 |
 | `www.okplay.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=4) | 2026-11-17 |
+| `www.phplay.bond` | [Source](https://t.me/PHPLAY_Offical/380) | 2026-11-17 |
 | `www.playsg8.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=11) | 2026-11-17 |
 | `www.s5.com` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=5) | 2026-11-17 |
 | `www.s5games.ph` | [Source](https://www.pagcor.ph/regulatory/pdf/App%20Kits/List-of-PAGCOR-Accredited-Gaming-System-Administrators-and-Registered-Brands-and-Domain-Names-URLs.pdf#page=5) | 2026-11-17 |

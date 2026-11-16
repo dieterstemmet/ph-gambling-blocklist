@@ -2,14 +2,14 @@
 
 Block Philippine gambling platforms with AdGuard Home or Private AdGuard DNS. Every hostname has a public evidence link and a review date.
 
-The first release contains **432 hostnames and 395 DNS rules**, sourced from PAGCOR's register dated **October 29, 2026** and reviewed **November 17, 2026**. Licensed and unlicensed gambling platforms are in scope; the initial list covers the official register, not the entire Philippine gambling market.
+The list combines PAGCOR's domain register with reviewed destinations found in public gambling promotions. See the [domain tracker](docs/domains.md) for current counts, evidence and review dates. Licensed and unlicensed gambling platforms are in scope; coverage is not the entire Philippine gambling market.
 
 ## Subscribe
 
 Copy this URL:
 
 ```text
-https://raw.githubusercontent.com/dieterstemmet/ph-gambling-blocklist/main/blocklists/adguard.txt
+https://dieterstemmet.github.io/ph-gambling-blocklist/assets/filter_1.txt
 ```
 
 **AdGuard Home:** Filters → DNS blocklists → Add blocklist → Add a custom list. Name it `PH Gambling Blocklist`, paste the URL and save.
@@ -27,9 +27,9 @@ Enable the list, refresh it, and check `bingoplus.ph` in AdGuard's filtering che
 
 ## Updates
 
-The refresh command reads the current PAGCOR register and reports **new hostnames, missing entries and exclusions**. A maintainer reviews the evidence before publishing changes. Missing entries remain blocked until a removal is reviewed. A failed download cannot erase the published list.
+`refresh` reads the current PAGCOR register. `watch` reads a curated set of public gambling-promotion channels, extracting destinations from channel descriptions, messages and link buttons. Reports retain source evidence and identify hosts already covered by the reviewed rules. A maintainer reviews candidates before publishing changes. Missing entries remain blocked until a removal is reviewed.
 
-Subscribers receive reviewed changes when AdGuard refreshes the subscription. Source refreshes are maintainer-run; no unattended scheduler is installed or running for this repository. The `Last reviewed` line in the subscription describes evidence review, not a promise of daily coverage.
+Subscribers receive reviewed changes from GitHub Pages when AdGuard refreshes the subscription. Discovery and Pages publication are maintainer-run. The `Last reviewed` line describes evidence review, not a promise of daily coverage. [Where platforms reach people](docs/discovery-sources.md) lists the wider collection sources and access limits.
 
 Report a [missed gambling domain](https://github.com/dieterstemmet/ph-gambling-blocklist/issues/new?template=gambling-domain.yml) or a [false positive](https://github.com/dieterstemmet/ph-gambling-blocklist/issues/new?template=false-positive.yml). Include public evidence. Never submit DNS query logs, browsing histories, credentials or referral tokens.
 
@@ -50,7 +50,13 @@ python -m pip install --require-hashes -r requirements.txt
 python -m phblock refresh
 ```
 
-Review `reports/pagcor.json`, update the reviewed records, rebuild, run the checks and open a pull request. Refresh does not edit the reviewed records or subscription. See [contributing](CONTRIBUTING.md) for review and scheduling instructions.
+To discover domains from curated public promotions, using only the Python standard library:
+
+```sh
+python -m phblock watch
+```
+
+Review `reports/pagcor.json` and `reports/promotions.json`, update the reviewed records, rebuild, run the checks and open a pull request. Neither discovery command publishes candidates. See [contributing](CONTRIBUTING.md) for review, Pages publication and scheduling instructions.
 
 ## Coverage
 

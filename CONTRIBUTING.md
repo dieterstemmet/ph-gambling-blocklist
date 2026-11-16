@@ -43,9 +43,32 @@ If the source fails, changes format or produces an unexpected count, investigate
 
 ## Schedule discovery
 
-The repository does not install a scheduler. A maintainer may run `python -m phblock refresh` daily with Windows Task Scheduler or cron, setting the working directory to the repository and using the Python environment with `requirements.txt` installed. Review the report and command failures. Scheduling discovery alone does not publish changes.
+Public promotion discovery uses only the Python standard library:
 
-AdGuard's subscription refresh is separate: it downloads the latest reviewed file from `main`. The filter includes `Expires: 1 days` as a refresh hint; the resolver's settings determine its refresh schedule.
+```sh
+python -m phblock watch
+```
+
+Review `reports/promotions.json`. Each candidate records its source permalink and the reviewed rule covering it, if any. Counts distinguish candidates, already-covered hosts, exclusions and failed sources. A source failure yields a partial report and a nonzero exit code. A new observation does not prove a new launch or current availability.
+
+Add a public channel to `sources/promotion-watchlist.json` only after inspecting its gambling-related purpose and Philippine connection. Channel names and claims of being official or licensed are not independently verified. The adapter reads only visible descriptions, message text and link buttons in the public preview. It does not fetch linked destinations, join groups, follow referral links or download apps. Chat and file-host links remain unapproved unless their dedicated gambling use is established.
+
+For SMS, private messages or inaccessible ads, submit only the hostname and a public evidence link when available. Do not submit a message export, phone number, account identifiers or referral query parameters. The issue form can record where the promotion appeared.
+
+The repository does not install a scheduler. A maintainer may run `python -m phblock refresh` and `python -m phblock watch` daily with Windows Task Scheduler or cron, setting the working directory to the repository. The PDF refresh needs the environment with `requirements.txt` installed. Review reports and command failures. Scheduling discovery alone does not publish changes.
+
+AdGuard's subscription refresh is separate: it downloads the reviewed file deployed to GitHub Pages. The filter includes `Expires: 1 days` as a refresh hint; the resolver's settings determine its refresh schedule.
+
+## Publish GitHub Pages
+
+After a filter change is reviewed, tested and merged, update the `gh-pages` deployment branch from an isolated worktree. Keep that worktree separate from the source checkout. The deployment branch contains only `assets/filter_1.txt` and `.nojekyll`.
+
+1. Run `python -m phblock build --check` from the clean, updated `main` source checkout.
+2. Open the `gh-pages` worktree. Copy the verified `blocklists/adguard.txt` from `main` into `assets/filter_1.txt`, preserving its bytes. Do not copy the source checkout, data files or documentation.
+3. Commit the changed asset with its source commit and verification in the body, then push `gh-pages`. Follow the standing branch/head verification rules. This is an artifact deployment; source changes still go through a pull request to `main`.
+4. Confirm the Pages deployment succeeds and fetch `https://dieterstemmet.github.io/ph-gambling-blocklist/assets/filter_1.txt`. Require HTTP 200, `text/plain`, and an exact byte comparison with `main`'s reviewed file before reporting publication complete.
+
+GitHub Pages is configured to deploy the root of `gh-pages`, with HTTPS enforced and Jekyll disabled. The raw GitHub file remains a source download; the documented subscription is the Pages URL. No repository CI workflow is installed.
 
 ## Verify a change
 
